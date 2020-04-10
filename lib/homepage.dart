@@ -1,6 +1,7 @@
 import 'package:evil_insult_app/model/network.dart';
 import 'package:flutter/material.dart';
-import 'package:evil_insult_app/widgets/button.dart';
+import 'constants.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class Homepage extends StatefulWidget {
   @override
@@ -29,8 +30,11 @@ class _HomepageState extends State<Homepage> {
             future: futureInsult,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data.insult);
-              } else if(snapshot.hasError) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(snapshot.data.insult, style: kInsultStyle, textAlign: TextAlign.center,),
+                );
+              } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
               return CircularProgressIndicator();
@@ -39,7 +43,30 @@ class _HomepageState extends State<Homepage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: BottomButton(),
+      floatingActionButton: AvatarGlow(
+        startDelay: Duration(milliseconds: 1000),
+        glowColor: Colors.purple,
+        endRadius: 90.0,
+        duration: Duration(milliseconds: 2000),
+        repeat: true,
+        showTwoGlows: true,
+        repeatPauseDuration: Duration(milliseconds: 100),
+        child: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              futureInsult = fetchData();
+            });
+          },
+          child: Text(
+            '😈',
+            style: kEmojiStyle,
+          ),
+          backgroundColor: Colors.white,
+        ),
+        shape: BoxShape.circle,
+        animate: true,
+        curve: Curves.fastOutSlowIn,
+      ),
     );
   }
 }
