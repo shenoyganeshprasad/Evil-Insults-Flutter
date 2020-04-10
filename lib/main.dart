@@ -1,3 +1,4 @@
+import 'package:evil_insult_app/homepage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Evil Insults',
+      home: Homepage(),
     );
   }
 }
